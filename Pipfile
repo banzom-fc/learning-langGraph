@@ -6,6 +6,10 @@ name = "pypi"
 [packages]
 langgraph = "*"
 ipykernel = "*"
+langchain = "*"
+langchain-google-genai = "*"
+langchain-core = "*"
+dotenv = "*"
 
 [dev-packages]
 ipykernel = "*"

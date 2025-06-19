@@ -3,6 +3,7 @@ from langgraph.graph import StateGraph, START, END
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage
 from dotenv import load_dotenv
+from IPython.display import Image, display
 import os
 load_dotenv()
 
@@ -34,6 +35,12 @@ graph.add_edge(START, "chat")
 graph.add_edge("chat", END)
 
 agent = graph.compile()
+
+# Save the graph to a file
+image_bytes = agent.get_graph().draw_mermaid_png()
+image_path = os.path.join(os.getcwd(), "AIAgents", "imgs", "agent-1-graph.png")
+with open(image_path, "wb") as f:
+    f.write(image_bytes)
 
 # Run the graph with an initial state
 query = input("You: ")

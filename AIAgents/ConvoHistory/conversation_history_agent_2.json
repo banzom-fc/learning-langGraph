@@ -1,0 +1,66 @@
+[
+    {
+        "type": "human",
+        "content": "Hello"
+    },
+    {
+        "type": "ai",
+        "content": "Hello! How can I help you today?"
+    },
+    {
+        "type": "human",
+        "content": "my name is Aditya"
+    },
+    {
+        "type": "ai",
+        "content": "Nice to meet you, Aditya! How can I help you today?"
+    },
+    {
+        "type": "human",
+        "content": "What is my Name"
+    },
+    {
+        "type": "ai",
+        "content": "Your name is Aditya! You just told me."
+    },
+    {
+        "type": "human",
+        "content": "HEllo"
+    },
+    {
+        "type": "ai",
+        "content": "Hello again, Aditya! How can I help you?"
+    },
+    {
+        "type": "human",
+        "content": "What is my name"
+    },
+    {
+        "type": "ai",
+        "content": "Your name is Aditya."
+    },
+    {
+        "type": "human",
+        "content": "tell me how many R's are there in word Strawberry ?"
+    },
+    {
+        "type": "ai",
+        "content": "There are **3** R's in the word \"Strawberry\"."
+    },
+    {
+        "type": "human",
+        "content": "and how many T are there"
+    },
+    {
+        "type": "ai",
+        "content": "There is **1** T in the word \"Strawberry\"."
+    },
+    {
+        "type": "human",
+        "content": "list me kubernetes pods"
+    },
+    {
+        "type": "ai",
+        "content": "To list Kubernetes pods, you'll use the `kubectl` command-line tool.\n\nHere are the most common ways to do it:\n\n1.  **List pods in the current namespace:**\n    This is the most basic command and will show pods only in the namespace you are currently configured to use (or the `default` namespace if not specified).\n\n    ```bash\n    kubectl get pods\n    ```\n\n    You'll typically see output like:\n    ```\n    NAME                               READY   STATUS    RESTARTS   AGE\n    my-app-pod-abcdefg                 1/1     Running   0          2d\n    another-service-pod-hijklm         1/1     Running   0          1d\n    ```\n\n2.  **List pods in a specific namespace:**\n    If your pods are in a namespace other than the current one, you need to specify it using the `-n` or `--namespace` flag.\n\n    ```bash\n    kubectl get pods -n my-application-namespace\n    ```\n\n3.  **List pods in all namespaces:**\n    To see all pods across your entire cluster, use the `--all-namespaces` or `-A` flag.\n\n    ```bash\n    kubectl get pods --all-namespaces\n    # or\n    kubectl get pods -A\n    ```\n\n4.  **List pods with more details (e.g., Node IP):**\n    The `-o wide` flag provides additional information, such as the internal IP address of the pod and the node it's running on.\n\n    ```bash\n    kubectl get pods -o wide\n    ```\n\n    Output might look like:\n    ```\n    NAME                               READY   STATUS    RESTARTS   AGE     IP            NODE           NOMINATED NODE   READINESS GATES\n    my-app-pod-abcdefg                 1/1     Running   0          2d      10.42.0.10    minikube       <none>           <none>\n    another-service-pod-hijklm         1/1     Running   0          1d      10.42.0.11    minikube       <none>           <none>\n    ```\n\n**Before you run these commands:**\n\n*   Make sure you have `kubectl` installed on your machine.\n*   Ensure `kubectl` is configured to connect to your Kubernetes cluster (e.g., via a `kubeconfig` file).\n\nLet me know if you want to know more about the output columns or need to filter pods in a specific way!"
+    }
+]

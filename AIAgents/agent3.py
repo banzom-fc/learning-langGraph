@@ -65,7 +65,16 @@ model = ChatGoogleGenerativeAI(
 
 # Node 1
 def model_node(state: AgentState) -> AgentState:
-    response = model.invoke(["You are a helpful assistant."])
+    # response = model.invoke(["You are a helpful assistant."])
+    
+    # OR
+    
+    system_prompt = SystemMessage(
+        content="You are a helpful assistant."
+    )
+    response = model.invoke([system_prompt])
+    
+    
     return {
         "messages": [response]
     } # this type of return can be used to update the state with new messages along with the existing ones. Because of the add_messages decorator, it will automatically merge the new messages with the existing ones in the state.

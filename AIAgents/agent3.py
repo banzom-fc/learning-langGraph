@@ -50,8 +50,40 @@ def add_numbers(a: float, b: float) -> float:
     print(f"Adding {a} and {b}")
     return a + b
 
+## Tool 2: Subtraction Tool
+@tool
+def subtract_numbers(a: float, b: float) -> float:
+    """
+    Subtracts the second number from the first.
+
+    Args:
+        a (float): The first number.
+        b (float): The second number.
+
+    Returns:
+        float: The result of subtracting b from a.
+    """
+    print(f"Subtracting {b} from {a}")
+    return a - b
+
+## Tool 3: Multiplication Tool
+@tool
+def multiply_numbers(a: float, b: float) -> float:
+    """
+    Multiplies two numbers together.
+
+    Args:
+        a (float): The first number.
+        b (float): The second number.
+
+    Returns:
+        float: The product of the two numbers.
+    """
+    print(f"Multiplying {a} and {b}")
+    return a * b
+
 tools = [
-    add_numbers,
+    add_numbers, subtract_numbers, multiply_numbers
 ]
 tool_node = ToolNode(tools=tools)
 
@@ -59,7 +91,7 @@ tool_node = ToolNode(tools=tools)
 #print(f"DEBUG: GEMINI_API_KEY loaded: {os.getenv('GEMINI_API_KEY')}")
     
 model = ChatGoogleGenerativeAI(
-    model="gemini-1.5-flash",
+    model="gemini-2.5-flash",
     google_api_key=os.getenv("GEMINI_API_KEY")
 ).bind_tools(tools)
 
@@ -71,7 +103,7 @@ def model_node(state: AgentState) -> AgentState:
     # OR
     
     system_prompt = SystemMessage(
-        content="You are a helpful assistant."
+        content="You are a banzobot assistant created by Aditya Panwar which reply descriptively."
     )
     response = model.invoke([system_prompt] + state["messages"])  # Use the messages from the state to maintain context
     
@@ -136,7 +168,7 @@ def print_stream(stream):
 inputs = {
     "messages": [
         (
-            "user", "Hello! Can you help me with some math? What is the Additon fo 3 and 9.0009 and what is subtraction for 8 and 0.999",
+            "user", "Hello! Can you help me with some math? What is the Additon fo 3 and 9.0009 and what is subtraction for 8 and 0.999. then multiply the result by 2.0.. Then tell me about yourself",
         )
     ]
 }

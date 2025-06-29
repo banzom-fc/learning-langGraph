@@ -103,7 +103,7 @@ def model_node(state: AgentState) -> AgentState:
     # OR
     
     system_prompt = SystemMessage(
-        content="You are a banzobot assistant created by Aditya Panwar which reply descriptively."
+        content="You are a banzobot assistant created by Aditya Panwar which reply descriptively. You can do anything + More better with tools. "
     )
     response = model.invoke([system_prompt] + state["messages"])  # Use the messages from the state to maintain context
     
@@ -154,23 +154,53 @@ image_path = os.path.join(os.getcwd(), "AIAgents", "imgs", "agent-3-graph.png")
 with open(image_path, "wb") as f:
     f.write(image_bytes)
 
+# Interactive loop to chat with the agent
+def format_user_message(text):
+    # Convert user input to the expected message format
+    return ("user", text)
+
+print("Welcome to Banzobot! Type 'exit' to quit.")
+messages = []
+
+while True:
+    user_input = input("You: ")
+    if user_input.strip().lower() == "exit":
+        break
+    messages.append(format_user_message(user_input))
+    inputs = {"messages": messages}
+    # Get the agent's response (not streaming)
+    result = agent.invoke(inputs)
+    # The agent returns a dict with "messages" as a list; get the last message
+    last_message = result["messages"][-1]
+    # If it's a tuple, print the content; else, try to access .content
+    if isinstance(last_message, tuple):
+        print("Banzobot:", last_message[1])
+    else:
+        print("Banzobot:", getattr(last_message, "content", str(last_message)))
+    # Add the agent's message to the conversation history
+    messages.append(last_message)
+
+### End of the interactive loop
+
+## Streaming version
+# Uncomment the following lines to use streaming instead of non-streaming
 # Helper function to convert inputs to BaseMessage format
-def print_stream(stream):
-    for s in stream:
-        message = s["messages"][-1]  # Get the last message in the stream
-        if isinstance(message, tuple):
-            print(message)
-        else:
-            message.pretty_print()
+# def print_stream(stream):
+#     for s in stream:
+#         message = s["messages"][-1]  # Get the last message in the stream
+#         if isinstance(message, tuple):
+#             print(message)
+#         else:
+#             message.pretty_print()
 
 
-# Run the graph
-inputs = {
-    "messages": [
-        (
-            "user", "Hello! Can you help me with some math? What is the Additon fo 3 and 9.0009 and what is subtraction for 8 and 0.999. then multiply the result by 2.0.. Then tell me about yourself",
-        )
-    ]
-}
-print_stream(agent.stream(inputs, stream_mode="values"))
-
+# # Run the graph
+# inputs = {
+#     "messages": [
+#         (
+#             "user", "Hello! Can you help me with some math? What is the Additon fo 3 and 9.0009 and what is subtraction for 8 and 0.999. then multiply the result by 2.0.. Then tell me about yourself",
+#         )
+#     ]
+# }
+# print_stream(agent.stream(inputs, stream_mode="values"))
+## End of streaming version
